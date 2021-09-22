@@ -42,34 +42,38 @@ function App() {
     }
   }, [])
 
-  const onContainerClick = () => {
-    // `current` points to the mounted text input element
-    // inputEl.current.focus()
-  }
-
+  const textToMatched = textToType.substring(0, textTyping.length).substring(textTyping.length - 30)
+  const textTyped = textTyping
+    .substring(textTyping.length - 30)
+    .split('')
+    .map((letter, index) => (
+      <span style={{ color: textToMatched.charAt(index) === letter ? 'green' : 'red' }}>
+        {letter}
+      </span>
+    ))
   return (
     <>
-      <div className="container" onClick={onContainerClick}>
+      <div className="container">
         <div className="typing-container">
           <div className="typed-text">
-            <p className="white-space">{textToType.substring(0, textTyping.length)}</p>
+            <p className="white-space">{textToMatched}</p>
           </div>
           <div className="typewriter-space"></div>
           <div className="incoming-text">
             <p className="white-space">
-              {textToType.substring(textTyping.length, textToType.length)}
+              {textToType.substring(textTyping.length, textTyping.length + 30)}
             </p>
           </div>
           <div></div>
         </div>
         <div className="typing-container">
           <div className="typed-text">
-            <p className="white-space">{textTyping.substring(textTyping.length - 30)}</p>
+            <p className="white-space">{textTyped}</p>
           </div>
           <div className="typewriter"></div>
           <div className="incoming-text">
             <p className="white-space">
-              {textToType.substring(textTyping.length, textToType.length)}
+              {textToType.substring(textTyping.length, textTyping.length + 30)}
             </p>
           </div>
           <div></div>
