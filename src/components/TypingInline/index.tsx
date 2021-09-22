@@ -30,11 +30,19 @@ const TypingInline = () => {
   const textTyped = textTyping
     .substring(textTyping.length - 30)
     .split('')
-    .map((letter, index) => (
-      <span style={{ color: textToMatched.charAt(index) === letter ? 'green' : 'red' }}>
-        {letter}
-      </span>
-    ))
+    .map((letter, index) => {
+      const isMatched = textToMatched.charAt(index) === letter
+      return (
+        <span
+          style={{
+            color: isMatched ? 'green' : '#fff',
+            backgroundColor: isMatched ? '' : 'red',
+          }}
+        >
+          {letter}
+        </span>
+      )
+    })
   return (
     <>
       <div className="container">
