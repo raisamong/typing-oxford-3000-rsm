@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import 'src/App.css'
 import { shuffle } from 'src/utils'
 import { vocab } from 'src/vocab'
+import './style.css'
+
+const whilelistKeyCode = [189]
 
 const TypingInline = () => {
   const [textToType, setTextToType] = useState<string>('')
@@ -12,7 +14,10 @@ const TypingInline = () => {
       console.log('KeyCode:', event.keyCode)
       if (event.keyCode === 8) {
         setTextTyping((prev) => prev.substring(0, prev.length - 1))
-      } else if (event.keyCode >= 48 && event.keyCode <= 90) {
+      } else if (
+        (event.keyCode >= 48 && event.keyCode <= 90) ||
+        whilelistKeyCode.includes(event.keyCode)
+      ) {
         setTextTyping((prev) => prev + event.key)
       } else if (event.keyCode === 32) {
         setTextTyping((prev) => prev + ' ')
@@ -35,7 +40,7 @@ const TypingInline = () => {
       return (
         <span
           style={{
-            color: isMatched ? 'green' : '#fff',
+            color: isMatched ? 'green' : '#000',
             backgroundColor: isMatched ? '' : 'red',
           }}
         >
