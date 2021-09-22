@@ -58,6 +58,7 @@ input:focus-visible {
 
 .incoming-text {
   flex: 1;
+  overflow-x: hidden;
 }
 
 /* The typewriter cursor effect */
