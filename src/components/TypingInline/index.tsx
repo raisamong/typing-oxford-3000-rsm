@@ -3,7 +3,7 @@ import { shuffle } from 'src/utils'
 import { vocab } from 'src/vocab'
 import './style.css'
 
-const whilelistKeyCode = [189]
+const whilelistKeyCode = [189, 188, 190]
 
 const TypingInline = () => {
   const [textToType, setTextToType] = useState<string>('')
@@ -53,7 +53,9 @@ const TypingInline = () => {
       <div className="container">
         <div className="typing-container">
           <div className="typed-text">
-            <p className="white-space">{textToMatched}</p>
+            <div className="inner-div">
+              <p className="white-space">{textToMatched}</p>
+            </div>
           </div>
           <div className="typewriter-space"></div>
           <div className="incoming-text">
@@ -65,7 +67,9 @@ const TypingInline = () => {
         </div>
         <div className="typing-container">
           <div className="typed-text">
-            <p className="white-space">{textTyped}</p>
+            <div className="inner-div">
+              <p className="white-space">{textTyped}</p>
+            </div>
           </div>
           <div className="typewriter"></div>
           <div className="incoming-text">
