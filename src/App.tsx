@@ -1,11 +1,24 @@
+import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup'
+import { initializeIcons } from '@fluentui/react/lib/Icons'
 import { Toggle } from '@fluentui/react/lib/Toggle'
 import React, { useState } from 'react'
 import TypingInline from 'src/components/TypingInline'
 import TypingParagraph from 'src/components/TypingParagraph'
 import './App.css'
 
+initializeIcons()
+
 const inline = 'inline'
 const paragraph = 'paragraph'
+
+const modeOptions: IChoiceGroupOption[] = [
+  { key: inline, text: 'Inline', iconProps: { iconName: 'CompassNW' } },
+  { key: paragraph, text: 'Paragraph', iconProps: { iconName: 'CalendarWeek' } },
+]
+
+export const ModeSelector: React.FunctionComponent = () => {
+  return <ChoiceGroup label="Mode" defaultSelectedKey={inline} options={modeOptions} />
+}
 
 type TypingMode = 'inline' | 'paragraph'
 
@@ -26,6 +39,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <ModeSelector />
       <button
         onClick={() => {
           setMode(inline)
