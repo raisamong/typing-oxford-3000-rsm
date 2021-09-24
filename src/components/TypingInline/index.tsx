@@ -5,17 +5,13 @@ import './style.css'
 
 const whilelistKeyCode = [189, 188, 190]
 const textShowlenght = 30
+const space = ' '
 
 const isWordExists = (word: string): boolean => {
-  console.log({ word })
   return vocabIndex[word]
 }
 
-const matchingText = (leadText: string[], textToValidate: string) => {
-  const textToMatched = leadText
-    .join(' ')
-    .substring(0, textToValidate.length)
-    .substring(textToValidate.length - textShowlenght)
+const matchingText = (textToMatched: string, textToValidate: string) => {
   const textTyped = textToValidate
     .substring(textToValidate.length - textShowlenght)
     .split('')
@@ -43,7 +39,7 @@ interface TypingInlineProps {
 const TypingInline = (props: TypingInlineProps) => {
   const { speakWord } = props
 
-  const [textToType, setTextToType] = useState<string[]>([])
+  const [textToType, setTextToType] = useState<string>('')
   const [typedText, setTypedText] = useState<string>('')
   const [word, setWord] = useState<string>('')
   const [triggerSpeak, setTriggerSpeak] = useState<boolean>(false)
@@ -63,30 +59,34 @@ const TypingInline = (props: TypingInlineProps) => {
         setTriggerSpeak(false)
       } else if (event.keyCode === 32) {
         setTriggerSpeak(true)
-        setTypedText((prev) => prev + ' ')
-        setWord((prev) => prev + ' ')
+        setTypedText((prev) => prev + space)
+        setWord((prev) => prev + space)
       }
     }
 
     document.addEventListener('keydown', fn)
-    setTextToType(shuffle(vocab))
+    setTextToType(shuffle(vocab).join(space))
     return () => {
       document.removeEventListener('keydown', fn)
     }
   }, [])
 
   useEffect(() => {
-    console.log()
-    if (isWordExists(word.trim()) && triggerSpeak) {
+    if (
+      isWordExists(word.trim()) &&
+      triggerSpeak &&
+      textToType.charAt(typedText.length - 1) === space
+    ) {
       speakWord(word)
       setWord('')
     }
-  }, [speakWord, triggerSpeak, word])
+  }, [speakWord, textToType, triggerSpeak, typedText, word])
 
-  const matchedText = matchingText(textToType, typedText)
-  const incomingText = textToType
-    .join(' ')
-    .substring(typedText.length, typedText.length + textShowlenght)
+  const textToMatched = textToType
+    .substring(0, typedText.length)
+    .substring(typedText.length - textShowlenght)
+  const matchedText = matchingText(textToMatched, typedText)
+  const incomingText = textToType.substring(typedText.length, typedText.length + textShowlenght)
 
   return (
     <>
@@ -94,7 +94,7 @@ const TypingInline = (props: TypingInlineProps) => {
         <div className="typing-container">
           <div className="typed-text">
             <div className="inner-div">
-              <p className="white-space">{typedText}</p>
+              <p className="white-space">{textToMatched}</p>
             </div>
           </div>
           <div className="typewriter-space"></div>
