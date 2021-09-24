@@ -25,6 +25,11 @@ function App() {
     window.speechSynthesis.speak(speaker)
   }
 
+  const SpeakWord = (word: string) => {
+    speaker.text = word
+    window.speechSynthesis.speak(speaker)
+  }
+
   return (
     <div className="app-container">
       <button
@@ -44,7 +49,7 @@ function App() {
       <button onClick={onClick}>Speak</button>
       <button onClick={onChange}>Random</button>
 
-      {mode === inline && <TypingInline />}
+      {mode === inline && <TypingInline speakWord={SpeakWord} />}
       {mode === paragraph && <TypingParagraph />}
     </div>
   )
