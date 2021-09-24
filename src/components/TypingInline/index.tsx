@@ -46,6 +46,7 @@ const TypingInline = (props: TypingInlineProps) => {
   const [textToType, setTextToType] = useState<string[]>([])
   const [typedText, setTypedText] = useState<string>('')
   const [word, setWord] = useState<string>('')
+  const [triggerSpeak, setTriggerSpeak] = useState<boolean>(false)
 
   useEffect(() => {
     const fn = function (event: { key: any; keyCode: any }) {
@@ -59,9 +60,11 @@ const TypingInline = (props: TypingInlineProps) => {
       ) {
         setTypedText((prev) => prev + event.key)
         setWord((prev) => prev + event.key)
+        setTriggerSpeak(false)
       } else if (event.keyCode === 32) {
+        setTriggerSpeak(true)
         setTypedText((prev) => prev + ' ')
-        setWord('')
+        setWord((prev) => prev + ' ')
       }
     }
 
@@ -73,14 +76,12 @@ const TypingInline = (props: TypingInlineProps) => {
   }, [])
 
   useEffect(() => {
-    if (isWordExists(word)) {
-      console.log('Existing Word', word)
+    console.log()
+    if (isWordExists(word.trim()) && triggerSpeak) {
       speakWord(word)
       setWord('')
-    } else {
-      console.log('Not Existing Word', word)
     }
-  }, [speakWord, word])
+  }, [speakWord, triggerSpeak, word])
 
   const matchedText = matchingText(textToType, typedText)
   const incomingText = textToType
