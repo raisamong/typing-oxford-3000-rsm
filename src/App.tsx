@@ -1,7 +1,7 @@
+import { Toggle } from '@fluentui/react/lib/Toggle'
 import React, { useState } from 'react'
 import TypingInline from 'src/components/TypingInline'
 import TypingParagraph from 'src/components/TypingParagraph'
-import { vocab } from 'src/vocab'
 import './App.css'
 
 const inline = 'inline'
@@ -12,22 +12,16 @@ type TypingMode = 'inline' | 'paragraph'
 function App() {
   const [mode, setMode] = useState<TypingMode>('inline')
   const [speaker] = useState<SpeechSynthesisUtterance>(new SpeechSynthesisUtterance('test'))
-
-  // useEffect(() => {
-  //   setSpeaker()
-  // }, [])
-
-  const onClick = () => {
-    window.speechSynthesis.speak(speaker)
-  }
-  const onChange = () => {
-    speaker.text = vocab[Math.floor(Math.random() * vocab.length) + 1]
-    window.speechSynthesis.speak(speaker)
-  }
+  const [enabledSpeaking, setEnabledSpeaking] = useState<boolean>(false)
 
   const SpeakWord = (word: string) => {
+    if (!enabledSpeaking) return
     speaker.text = word
     window.speechSynthesis.speak(speaker)
+  }
+
+  const toggleSpeaking = (_e: React.MouseEvent<HTMLElement>, checked?: boolean) => {
+    setEnabledSpeaking(checked || false)
   }
 
   return (
@@ -46,9 +40,14 @@ function App() {
       >
         Paragraph
       </button>
-      <button onClick={onClick}>Speak</button>
-      <button onClick={onChange}>Random</button>
-
+      <Toggle
+        label="Enabled Pronunciation"
+        onText="On"
+        offText="Off"
+        inlineLabel
+        checked={enabledSpeaking}
+        onChange={toggleSpeaking}
+      />
       {mode === inline && <TypingInline speakWord={SpeakWord} />}
       {mode === paragraph && <TypingParagraph />}
     </div>
