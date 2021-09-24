@@ -45,8 +45,8 @@ const TypingInline = (props: TypingInlineProps) => {
   const [triggerSpeak, setTriggerSpeak] = useState<boolean>(false)
 
   useEffect(() => {
-    const fn = function (event: { key: any; keyCode: any }) {
-      // console.log('KeyCode:', event.keyCode)
+    const fn = function (event: any) {
+      console.log('KeyCode:', event.keyCode, event.key)
       if (event.keyCode === 8) {
         setTypedText((prev) => prev.substring(0, prev.length - 1))
         setWord((prev) => prev.substring(0, prev.length - 1))
@@ -64,10 +64,10 @@ const TypingInline = (props: TypingInlineProps) => {
       }
     }
 
-    document.addEventListener('keydown', fn)
+    document.addEventListener('keyup', fn)
     setTextToType(shuffle(vocab).join(space))
     return () => {
-      document.removeEventListener('keydown', fn)
+      document.removeEventListener('keyup', fn)
     }
   }, [])
 
@@ -114,7 +114,7 @@ const TypingInline = (props: TypingInlineProps) => {
             <p className="white-space">{incomingText}</p>
           </div>
         </div>
-        {word}
+        <p className="white-space">{word.trim() ? `"${word}"` : space}</p>
       </div>
     </>
   )

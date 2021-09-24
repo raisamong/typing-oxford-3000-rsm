@@ -38,8 +38,29 @@ function App() {
   }
 
   return (
-    <div className="app-container">
-      <ModeSelector />
+    <>
+      <Toggle
+        styles={{
+          root: {
+            justifyContent: 'end',
+            padding: '1rem',
+          },
+          label: {
+            color: '#fff',
+          },
+          text: {
+            color: '#fff',
+          },
+        }}
+        label="Enabled Pronunciation"
+        onText="On"
+        offText="Off"
+        inlineLabel
+        checked={enabledSpeaking}
+        onChange={toggleSpeaking}
+      />
+      <div className="app-container">
+        {/* <ModeSelector />
       <button
         onClick={() => {
           setMode(inline)
@@ -53,18 +74,12 @@ function App() {
         }}
       >
         Paragraph
-      </button>
-      <Toggle
-        label="Enabled Pronunciation"
-        onText="On"
-        offText="Off"
-        inlineLabel
-        checked={enabledSpeaking}
-        onChange={toggleSpeaking}
-      />
-      {mode === inline && <TypingInline speakWord={SpeakWord} />}
-      {mode === paragraph && <TypingParagraph />}
-    </div>
+      </button> */}
+
+        {mode === inline && <TypingInline speakWord={SpeakWord} />}
+        {mode === paragraph && <TypingParagraph />}
+      </div>
+    </>
   )
 }
 
