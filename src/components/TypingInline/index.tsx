@@ -61,6 +61,7 @@ const TypingInline = (props: TypingInlineProps) => {
         setWord((prev) => prev + event.key)
       } else if (event.keyCode === 32) {
         setTypedText((prev) => prev + ' ')
+        setWord('')
       }
     }
 
@@ -79,7 +80,7 @@ const TypingInline = (props: TypingInlineProps) => {
     } else {
       console.log('Not Existing Word', word)
     }
-  }, [word])
+  }, [speakWord, word])
 
   const matchedText = matchingText(textToType, typedText)
   const incomingText = textToType
@@ -89,7 +90,6 @@ const TypingInline = (props: TypingInlineProps) => {
   return (
     <>
       <div className="container">
-        {word}
         <div className="typing-container">
           <div className="typed-text">
             <div className="inner-div">
@@ -112,8 +112,8 @@ const TypingInline = (props: TypingInlineProps) => {
           <div className="incoming-text">
             <p className="white-space">{incomingText}</p>
           </div>
-          <div></div>
         </div>
+        {word}
       </div>
     </>
   )

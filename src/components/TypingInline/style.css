@@ -8,10 +8,10 @@ input:focus-visible {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  font-family: monospace;
 }
 
 .typing-container {
-  font-family: monospace;
   width: 100%;
   display: flex;
   justify-content: space-between;
