@@ -46,7 +46,8 @@ const TypingInline = (props: TypingInlineProps) => {
 
   useEffect(() => {
     const fn = function (event: any) {
-      console.log('KeyCode:', event.keyCode, event.key)
+      event.preventDefault()
+      // console.log('KeyCode:', event.keyCode, event.key)
       if (event.keyCode === 8) {
         setTypedText((prev) => prev.substring(0, prev.length - 1))
         setWord((prev) => prev.substring(0, prev.length - 1))
